@@ -74,7 +74,7 @@ async function main () {
       // }
       const {
         body
-      } = await superagent.post(url + 'v2/publishers/settlement')
+      } = await agent.post(url + 'v2/publishers/settlement')
         .use(setHeaders(auth))
         .send(payload)
 
