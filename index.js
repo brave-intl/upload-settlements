@@ -1,5 +1,6 @@
-const yargs = require('yargs')
+const yargs = require('yargs').array('file')
 const path = require('path')
+const URL = require('url')
 const { argv } = yargs
 const _ = require('lodash')
 const fs = require('fs')
@@ -27,13 +28,12 @@ const txsValidator = Joi.array().min(1).items(txValidator).required().descriptio
 main().catch(console.error)
 
 async function main () {
-  const { file, auth, url } = argv
-  let filesArray = file.split(',')
+  const { file: filesArray, auth, url } = argv
   const agent = superagent.agent(url)
   let output = {}
   for (let fi = 0; fi < filesArray.length; fi += 1) {
     const file = filesArray[fi]
-    const filepath = path.join(__dirname, file)
+    const filepath = file[0] === '/' ? file : path.join(__dirname, file)
     console.log('parsing', filepath)
     const json = JSON.parse(fs.readFileSync(filepath).toString())
     const rejected = []
@@ -74,18 +74,13 @@ async function main () {
       // }
       const {
         body
-      } = await agent.post(url + 'v2/publishers/settlement')
+      } = await agent.post(URL.resolve(url, 'v2/publishers/settlement'))
         .use(setHeaders(auth))
         .send(payload)
 
       output = merge(output, body)
     }
   }
-  // return
-  console.log('submitting', output)
-  await agent.post(url + 'v2/publishers/settlement/submit')
-    .use(setHeaders(auth))
-    .send(output)
 }
 
 function writeAlternativeFile(prefix, file, object) {
@@ -96,7 +91,9 @@ function writeAlternativeFile(prefix, file, object) {
 
 function setHeaders(auth) {
   return (req) => {
-    return req.set('Authorization', `Bearer ${auth}`).set('Accept', 'application/json').set('Content-Type', 'application/json')
+    return req.set('Authorization', `Bearer ${auth}`)
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
   }
 }
 
