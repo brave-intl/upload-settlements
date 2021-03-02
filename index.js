@@ -112,6 +112,7 @@ async function main () {
 function writeAlternativeFile(prefix, file, object) {
   const pathway = file.split('/')
   pathway[pathway.length-1] = `${prefix}-${pathway[pathway.length-1]}`
+  fs.mkdirSync(path.join(__dirname, 'settlements'), { recursive: true })
   fs.writeFileSync(pathway.join('/'), JSON.stringify(object))
 }
 
