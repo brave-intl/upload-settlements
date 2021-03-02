@@ -10,13 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hapi/joi": "^15.1.1",
     "bat-publisher": "^2.0.24",
     "bitcoinjs-lib": "^5.1.6",
     "bs58check": "^2.1.2",
-    "country-list": "^2.2.0",
-    "currency-codes": "^1.5.1",
+    "country-list": "^1.1.1",
+    "currency-codes": "^1.1.2",
     "ethereum-address": "0.0.4",
+    "joi": "^17.3.0",
     "lodash": "^4.17.15",
     "superagent": "^5.1.2"
   }

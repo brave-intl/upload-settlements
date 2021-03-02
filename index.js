@@ -1,12 +1,24 @@
-const yargs = require('yargs').array('file')
+const { argv } = require('yargs').config({
+  file: {
+    type: 'array',
+    describe: 'the list of files to upload'
+  },
+  auth: {
+    type: 'string',
+    describe: 'the auth key to use'
+  },
+  url: {
+    type: 'string',
+    describe: 'the host to point to'
+  }
+})
 const path = require('path')
 const URL = require('url')
-const { argv } = yargs
 const _ = require('lodash')
 const fs = require('fs')
 const superagent = require('superagent')
 const braveJoi = require('./extras-joi')
-const Joi = require('@hapi/joi')
+const Joi = require('joi')
 const txValidator = Joi.object().keys({
   executedAt: braveJoi.date().iso().optional().description('the timestamp the settlement was executed'),
   owner: braveJoi.string().owner().required().description('the owner identity'),
@@ -27,10 +39,24 @@ const txsValidator = Joi.array().min(1).items(txValidator).required().descriptio
 
 main().catch(console.error)
 
+function getFiles(files) {
+  return (_.isString(files) ? [files] : files).reduce((memo, target) => {
+    let targets = target
+    if (fs.statSync(target).isDirectory()) {
+      targets = fs.readdirSync(target).filter((file) =>
+        file[0] !== '.'
+      )
+    }
+    return memo.concat(targets.map((file) =>  path.join(__dirname, target, file)).filter((target) => !target.includes('/filtered-') && !target.includes('/rejected-')))
+  }, [])
+}
+
 async function main () {
-  const { file: filesArray, auth, url } = argv
+  const { file: filesList, auth, url } = argv
   const agent = superagent.agent(url)
   let output = {}
+  const filesArray = getFiles(filesList)
+  console.log("files", filesArray)
   for (let fi = 0; fi < filesArray.length; fi += 1) {
     const file = filesArray[fi]
     const filepath = file[0] === '/' ? file : path.join(__dirname, file)
