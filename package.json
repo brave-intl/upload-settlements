@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bat-publisher": "^2.0.24",
+    "bat-publisher": "git://github.com/brave-intl/bat-publisher.git#master",
     "bignumber.js": "^9.0.1",
     "bitcoinjs-lib": "^5.1.6",
     "bs58check": "^2.1.2",

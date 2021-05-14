@@ -1,9 +1,16 @@
-# upload settelments
+
+
+# Upload completed transactions
 this repo facilitates the uploading of transactions to eyeshade
 
-run this command to upload to eyeshade production
+To upload to eyeshade staging
 ```
 node index.js --file ./settlements/2021-03-02 --url "https://eyeshade.bsg.bravesoftware.com" --auth "$(kubectl --context bsg-sandbox -n eyeshade-staging get secrets/env -o json | jq -r '.data.ALLOWED_PUBLISHERS_TOKENS' | base64 -d)"
+```
+
+To upload to eyeshade production
+```
+node index.js --file ./settlements/2021-03-02 --url "https://eyeshade.bsg.brave.com" --auth "$(kubectl --context bsg-production -n eyeshade-prod get secrets/env -o json | jq -r '.data.ALLOWED_PUBLISHERS_TOKENS' | base64 -d)"
 ```
 
 ## notes
