@@ -10,15 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bat-publisher": "git://github.com/brave-intl/bat-publisher.git#master",
-    "bignumber.js": "^9.0.1",
-    "bitcoinjs-lib": "^5.1.6",
+    "bat-publisher": "https://github.com/brave-intl/bat-publisher.git#master",
+    "bignumber.js": "^9.1.0",
+    "bitcoinjs-lib": "^6.0.2",
     "bs58check": "^2.1.2",
-    "country-list": "^1.1.1",
-    "currency-codes": "^1.1.2",
+    "country-list": "^2.2.0",
+    "currency-codes": "^2.1.0",
     "ethereum-address": "0.0.4",
-    "joi": "^17.3.0",
-    "lodash": "^4.17.15",
-    "superagent": "^5.1.2"
+    "joi": "^17.6.0",
+    "lodash": "^4.17.21",
+    "superagent": "^8.0.0",
+    "tiny-secp256k1": "^2.2.1"
   }
 }
