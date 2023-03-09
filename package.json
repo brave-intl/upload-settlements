@@ -22,7 +22,7 @@
     "superagent": "^8.0.9",
     "tiny-secp256k1": "^2.2.1"
   },
-  "resolutions": {
+  "overrides": {
     "jsdom": "21.1.0"
   }
 }
