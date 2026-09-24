@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "bignumber.js": "^9.1.2",
-    "bitcoinjs-lib": "^6.1.5",
+    "bitcoinjs-lib": "^7.0.0",
     "bs58check": "^3.0.1",
     "country-list": "^2.3.0",
     "currency-codes": "^2.1.0",
